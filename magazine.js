@@ -8,7 +8,7 @@ async function initMagazine(){
   const [{data:people,error:pErr},{data:services,error:sErr},{data:settings,error:setErr}] = await Promise.all([
    db.from("professionals").select("id,name,slug,bio,is_active,sort_order").eq("is_active",true).order("sort_order"),
    db.from("services").select("id,professional_id,name,description,is_active,sort_order").eq("is_active",true).order("sort_order").limit(5),
-   db.from("site_settings").select("studio_instagram_url").limit(1).maybeSingle()
+   db.from("site_settings").select("studio_instagram_url,whatsapp_phone").limit(1).maybeSingle()
   ]);
   if(pErr)throw pErr;if(sErr)throw sErr;if(setErr)throw setErr;
   peopleEl.innerHTML=people?.length?people.map(person=>'<li><strong>'+esc(person.name)+'</strong><span>'+esc(person.bio||"Conheça os serviços desta profissional.")+'</span><a class="professional-link" href="./profissional.html?perfil='+encodeURIComponent(person.slug)+'">Ver catálogo ↗</a></li>').join(""):'<li><strong>Nosso time</strong><span>As profissionais serão apresentadas em breve.</span></li>';
