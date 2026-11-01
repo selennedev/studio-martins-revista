@@ -1,5 +1,5 @@
-const SUPABASE_URL = "https://svpkaxatonqqymphlchv.supabase.co";
-const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_vu49xyFqwXGZJ6VDhRo5_g_KWmFzrwu";
+const SUPABASE_URL = "https://ocjoeevywucetraqauzs.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_bP0gL8Nj3RkMdq19GmAC2w_TFvsVgou";
 const params = new URLSearchParams(location.search);
 const slug = params.get("perfil");
 const catalog = document.querySelector("#catalog");
