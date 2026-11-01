@@ -65,3 +65,17 @@ address p strong{display:block;font:italic 500 16px var(--serif);color:var(--lip
 input:focus-visible~.book .dots label,.next:focus-visible,.cta:focus-visible{outline:2px solid var(--lip);outline-offset:3px}
 @media(max-width:760px){body{padding:24px 14px 70px}.spread{grid-template-columns:1fr;aspect-ratio:auto}.cover{grid-template-columns:1fr}.page.left,.page.right{border-radius:6px;box-shadow:none}.page.left{margin-bottom:-2px}.cover .page{max-width:420px;margin:auto}.tall{min-height:260px}.page{min-height:440px}.text-photo{grid-template-columns:1fr 1fr}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* Institutional identity */
+.institutional-cover{position:absolute;inset:0;display:grid;place-items:center;background:#f5f4f2;padding:9% 7% 24%;z-index:2}
+.brand-mark{width:100%;height:auto;max-height:72%;overflow:visible}
+.cover-text{z-index:3}
+.cover-text .script{color:#a68e7c}
+.cover-text h2{color:#a68e7c}
+.cover-photo{display:none}
+.secondary-contact{font:700 10px var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--soft);text-decoration:none}
+.is-pending{opacity:.7;cursor:default}
+.professional-entry{position:relative}
+.professional-thumb{width:68px;height:82px;object-fit:cover;float:right;margin:0 0 8px 12px;filter:grayscale(12%)}
+.professional-entry a{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--lip);text-decoration:none}
+@media(max-width:760px){.institutional-cover{padding-bottom:34%}.brand-mark{max-height:65%}.professional-thumb{width:58px;height:70px}}
