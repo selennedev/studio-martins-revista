@@ -1,49 +1,22 @@
 const SUPABASE_URL = "https://ocjoeevywucetraqauzs.supabase.co";
 const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_bP0gL8Nj3RkMdq19GmAC2w_TFvsVgou";
-const params = new URLSearchParams(location.search);
-const slug = params.get("perfil");
-const catalog = document.querySelector("#catalog");
-document.querySelector("#year").textContent = new Date().getFullYear();
-function esc(v) { return String(v == null ? "" : v).replace(/[&<>"\']/g, function(c) { return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","\'":"&#039;"}[c]; }); }
-function money(v) { return v == null ? "Consultar" : new Intl.NumberFormat("pt-BR", {style:"currency", currency:"BRL"}).format(Number(v)); }
-function render(person, categories, services, settings) {
-  document.querySelector("#personName").textContent = person.name;
-  document.querySelector("#personBio").textContent = person.bio || "Conheça os serviços e escolha seu próximo momento de cuidado.";
-  if (settings && settings.studio_instagram_url) document.querySelector("#studioInstagram").href = settings.studio_instagram_url;
-  var grouped = categories.map(function(cat) { return {cat:cat, items:services.filter(function(s) { return s.category_id === cat.id; })}; }).filter(function(g) { return g.items.length; });
-  var html = grouped.map(function(group) {
-    var rows = group.items.map(function(s) {
-      var duration = s.duration_minutes ? " • " + Math.floor(s.duration_minutes / 60) + "h" + (s.duration_minutes % 60 ? String(s.duration_minutes % 60).padStart(2,"0") : "") : "";
-      var price = (s.price_from ? "A partir de " : "") + money(s.price);
-      return '<article class="service-row"><div><h3>' + esc(s.name) + '</h3><p>' + esc(s.description || "") + esc(duration) + '</p></div><div class="price">' + price + '</div></article>';
-    }).join("");
-    return '<section><h2 class="category-title">' + esc(group.cat.name) + '</h2>' + rows + '</section>';
-  }).join("");
-  if (!html) html = '<p class="loading">Os serviços desta profissional estão sendo cadastrados. Em breve, o catálogo estará completo.</p>';
-  var phone = String(person.whatsapp_phone || (settings && settings.whatsapp_phone) || "").replace(/\D/g, "");
-  if (phone) {
-    var msg = encodeURIComponent("Olá, gostaria de informações e agendamento com " + person.name + ".");
-    html += '<a class="book" href="https://wa.me/' + phone + '?text=' + msg + '" target="_blank" rel="noreferrer">Agendar pelo WhatsApp ↗</a>';
-  }
-  if (person.booking_policy) html += '<aside class="policy"><strong>Informações para agendamento</strong><br>' + esc(person.booking_policy) + '</aside>';
-  catalog.innerHTML = html;
+const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY),root=document.querySelector("#magazineRoot"),slug=new URLSearchParams(location.search).get("perfil");
+const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const money=v=>v==null?"Consultar":new Intl.NumberFormat("pt-BR",{style:"currency",currency:"BRL"}).format(Number(v));
+const duration=v=>{if(!v)return"";const h=Math.floor(v/60),m=v%60;return" • "+(h?h+"h":"")+(m?String(m).padStart(2,"0")+"min":"");};
+function render(person,categories,services,settings){
+ document.title=person.name+" | Studio Martins";
+ const groups=categories.map(c=>({category:c,items:services.filter(s=>s.category_id===c.id)})).filter(g=>g.items.length),chunks=[];
+ groups.forEach(g=>{for(let i=0;i<g.items.length;i+=5)chunks.push({category:g.category,items:g.items.slice(i,i+5)});});
+ const total=chunks.length+3,phone=String(person.whatsapp_phone||settings?.whatsapp_phone||"").replace(/\D/g,""),instagram=person.instagram_url||settings?.studio_instagram_url||"https://www.instagram.com/studiomartinsudi/",wa=phone?"https://wa.me/"+phone+"?text="+encodeURIComponent("Olá, gostaria de informações e agendamento com "+person.name+"."):"#";
+ const radios=Array.from({length:total},(_,i)=>'<input type="radio" name="pg" id="pg'+(i+1)+'" '+(!i?'checked':'')+'>').join("");
+ const cover='<section class="spread s1 cover"><article class="page"><h1 class="masthead">'+esc(person.name)+'</h1><p class="author">Studio<br>Martins</p><div class="photo cover-photo"><span>Foto da profissional</span></div><div class="cover-text"><p class="script">Conheça</p><h2>Seu momento de cuidado</h2><p class="tagline">'+esc(person.bio||"Técnica, beleza e cuidado em cada detalhe.")+'</p></div><label for="pg2" class="next">Abrir catálogo</label></article></section>';
+ const intro='<section class="spread s2"><article class="page left"><div class="photo tall"><span>Foto da profissional</span></div><label for="pg1" class="prev">Capa</label></article><article class="page right"><p class="eyebrow">STUDIO MARTINS</p><h2 class="title">Sobre<br>'+esc(person.name)+'</h2><p class="service-intro">'+esc(person.bio||"Um atendimento pensado para valorizar sua beleza com técnica e atenção individual.")+'</p><p>Explore os procedimentos disponíveis e escolha o cuidado que faz sentido para você.</p><label for="pg3" class="next">'+(chunks.length?"Ver serviços":"Agendamento")+'</label></article></section>';
+ let servicesHtml="";
+ chunks.forEach((g,i)=>{const rows=g.items.map(s=>'<li><strong>'+esc(s.name)+'</strong><b>'+(s.price_from?"A partir de ":"")+money(s.price)+'</b><small>'+esc(s.description||"")+esc(duration(s.duration_minutes))+'</small></li>').join("");const n=i+3;servicesHtml+='<section class="spread s'+n+'"><article class="page left"><p class="eyebrow">CATÁLOGO DE SERVIÇOS</p><h2 class="title">'+esc(g.category.name)+'</h2><p class="service-intro">'+esc(g.category.description||"Técnica, cuidado e atenção aos detalhes em cada procedimento.")+'</p><div class="photo full"><span>Imagem do procedimento</span></div><label for="pg'+(n-1)+'" class="prev">Anterior</label></article><article class="page right"><ul class="service-list">'+rows+'</ul><label for="pg'+(n+1)+'" class="next">'+(n===total-1?"Agendamento":"Próxima")+'</label></article></section>';});
+ const ci=total,contact='<section class="spread s'+ci+'"><article class="page left"><p class="script big">Agende</p><h2 class="title">Seu horário<br>te espera</h2><p>Entre em contato para consultar disponibilidade e confirmar seu atendimento.</p><label for="pg'+(ci-1)+'" class="prev">Anterior</label></article><article class="page right"><address class="contact-data"><p><strong>Profissional</strong>'+esc(person.name)+'</p><p><strong>WhatsApp</strong>'+(phone?esc(phone):"Consulte o contato pelo Instagram")+'</p><p><strong>Instagram</strong>'+esc(instagram.replace(/^https?:\/\/(www\.)?instagram\.com\//,"@").replace(/\/$/,""))+'</p><p><strong>Informações</strong>'+esc(person.booking_policy||"Consulte as condições de agendamento diretamente com a profissional.")+'</p></address>'+(phone?'<a class="cta" href="'+wa+'" target="_blank" rel="noreferrer">Agendar pelo WhatsApp</a>':'<a class="cta" href="'+esc(instagram)+'" target="_blank" rel="noreferrer">Falar pelo Instagram</a>')+'<label for="pg1" class="next">Voltar à capa</label></article></section>';
+ const dots=Array.from({length:total},(_,i)=>'<label for="pg'+(i+1)+'" title="Página '+(i+1)+'"></label>').join(""),selectors=Array.from({length:total},(_,i)=>'#pg'+(i+1)+':checked~.book .s'+(i+1)).join(","),dotRules=Array.from({length:total},(_,i)=>'#pg'+(i+1)+':checked~.book .dots label:nth-child('+(i+1)+')').join(",");
+ root.outerHTML=radios+'<main class="book catalog-book">'+cover+intro+servicesHtml+contact+'<nav class="dots" aria-label="Páginas">'+dots+'</nav></main><style>'+selectors+'{display:grid;animation:turn .9s cubic-bezier(.2,.7,.2,1)}'+dotRules+'{background:var(--ink);transform:scale(1.3)}</style>';
 }
-async function init() {
-  if (!slug) { catalog.innerHTML = '<p class="loading">Profissional não informada. Volte ao início e escolha uma profissional.</p>'; return; }
-  if (!window.supabase || !window.supabase.createClient) { catalog.textContent = "Não foi possível iniciar o catálogo."; return; }
-  var db = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
-  try {
-    var personResult = await db.from("professionals").select("*").eq("slug", slug).eq("is_active", true).maybeSingle();
-    if (personResult.error) throw personResult.error;
-    var person = personResult.data;
-    if (!person) { catalog.textContent = "Profissional não encontrada."; return; }
-    var results = await Promise.all([
-      db.from("service_categories").select("id,name,sort_order").eq("professional_id", person.id).eq("is_active", true).order("sort_order"),
-      db.from("services").select("id,category_id,name,description,price,duration_minutes,price_from,sort_order").eq("professional_id", person.id).eq("is_active", true).order("sort_order"),
-      db.from("site_settings").select("studio_instagram_url,whatsapp_phone").limit(1).maybeSingle()
-    ]);
-    results.forEach(function(r) { if (r.error) throw r.error; });
-    render(person, results[0].data || [], results[1].data || [], results[2].data);
-  } catch (e) { console.error("Erro ao carregar profissional:", e); catalog.textContent = "Não foi possível carregar o catálogo neste momento."; }
-}
+async function init(){if(!slug){root.textContent="Profissional não informada.";return;}try{const pr=await db.from("professionals").select("*").eq("slug",slug).eq("is_active",true).maybeSingle();if(pr.error)throw pr.error;if(!pr.data){root.textContent="Profissional não encontrada.";return;}const [c,s,st]=await Promise.all([db.from("service_categories").select("id,name,description,sort_order").eq("professional_id",pr.data.id).eq("is_active",true).order("sort_order"),db.from("services").select("id,category_id,name,description,price,price_from,duration_minutes,sort_order").eq("professional_id",pr.data.id).eq("is_active",true).order("sort_order"),db.from("site_settings").select("studio_instagram_url,whatsapp_phone").limit(1).maybeSingle()]);for(const r of[c,s,st])if(r.error)throw r.error;render(pr.data,c.data||[],s.data||[],st.data);}catch(e){console.error(e);root.textContent="Não foi possível carregar o catálogo. Volte à revista e tente novamente.";}}
 init();
