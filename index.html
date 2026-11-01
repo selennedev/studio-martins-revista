@@ -1,55 +1,15 @@
-<!doctype html>
-<html lang="pt-BR">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#f7f2eb">
-  <meta name="description" content="Revista digital e catálogo de serviços do Studio Martins.">
-  <title>Studio Martins | Revista Digital</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./styles.css">
-</head>
-<body>
-  <header class="topbar">
-    <a class="brand" href="#" aria-label="Studio Martins início">STUDIO <span>MARTINS</span></a>
-    <nav aria-label="Navegação principal">
-      <a href="#profissionais">Profissionais</a>
-      <a href="#sobre">O espaço</a>
-      <a class="instagram-link" id="studioInstagram" href="https://www.instagram.com/studiomartinsudi/" target="_blank" rel="noreferrer" aria-label="Instagram do Studio Martins">◎</a>
-    </nav>
-  </header>
-
-  <main>
-    <section class="hero">
-      <div class="hero-copy">
-        <p class="eyebrow">BELEZA • CUIDADO • IDENTIDADE</p>
-        <h1>Seu momento.<br><em>Sua beleza.</em></h1>
-        <p class="intro">Uma experiência de cuidado reunida em um só lugar. Explore os serviços, conheça nossas profissionais e encontre seu próximo momento de autocuidado.</p>
-        <a class="primary-button" href="#profissionais">Explorar serviços <span>↗</span></a>
-      </div>
-      <div class="hero-art" role="img" aria-label="Composição abstrata em tons suaves"></div>
-      <div class="hero-note">STUDIO MARTINS <span>•</span> UBERLÂNDIA</div>
-    </section>
-
-    <section class="section-heading" id="profissionais">
-      <div><p class="eyebrow">NOSSO TIME</p><h2>Conheça nossas <em>profissionais</em></h2></div>
-      <p>Talento, técnica e atenção em cada detalhe.</p>
-    </section>
-    <section id="professionalGrid" class="professional-grid" aria-live="polite">
-      <div class="loading">Preparando o catálogo...</div>
-    </section>
-
-    <section class="about" id="sobre">
-      <p class="eyebrow">UM ESPAÇO PARA VOCÊ</p>
-      <h2>Beleza é também<br><em>se sentir bem.</em></h2>
-      <p>Escolha seu serviço, confira as informações e fale diretamente com a profissional para agendar.</p>
-    </section>
-  </main>
-
-  <footer><a class="brand" href="#">STUDIO <span>MARTINS</span></a><p>Beleza em cada detalhe.</p><small>© <span id="year"></span> Studio Martins</small></footer>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="./app.js"></script>
-</body>
-</html>
+<!DOCTYPE html>
+<html lang="pt-BR"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#f2f2f2">
+<meta name="description" content="Revista digital do Studio Martins. Conheça nossas profissionais e explore os serviços."><title>Studio Martins | Revista Beauty</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,500&family=Montserrat:wght@400;500;700;800&display=swap" rel="stylesheet"><link rel="stylesheet" href="./style.css"></head><body>
+<input type="radio" name="pg" id="p1" checked><input type="radio" name="pg" id="p2"><input type="radio" name="pg" id="p3"><input type="radio" name="pg" id="p4"><input type="radio" name="pg" id="p5">
+<main class="book">
+<section class="spread s1 cover"><article class="page"><h1 class="masthead">Studio Martins</h1><p class="author">Beleza<br>em cada detalhe</p><div class="photo cover-photo" role="img" aria-label="Capa editorial Studio Martins"><span>Studio Martins</span></div><div class="cover-text"><p class="script">Descubra</p><h2>Seu momento de beleza</h2><p class="tagline">Cuidado, técnica e identidade em uma experiência especial.</p></div><label for="p2" class="next">Abrir revista</label></article></section>
+<section class="spread s2"><article class="page left"><div class="photo tall" role="img" aria-label="Imagem editorial do Studio Martins"><span>Beleza & cuidado</span></div><label for="p1" class="prev">Capa</label></article><article class="page right"><div class="text-photo"><div class="text"><h2 class="title">Um espaço<br>para você</h2><p>Um lugar onde técnica, delicadeza e atenção aos detalhes se encontram para valorizar a sua beleza.</p><p>Explore os serviços, conheça nossas profissionais e encontre o cuidado que combina com você.</p></div><div class="photo eye" role="img" aria-label="Detalhe de beleza"><span>Detalhes</span></div></div><div class="photo wide" role="img" aria-label="Experiência Studio Martins"><span>Autocuidado</span></div><label for="p3" class="next">Próxima</label></article></section>
+<section class="spread s3"><article class="page left"><h2 class="title">Nossas<br>profissionais</h2><ul class="menu" id="professionalList"><li><strong>Conheça nosso time</strong><span>Carregando profissionais...</span></li></ul><label for="p2" class="prev">Anterior</label></article><article class="page right"><div class="photo full" role="img" aria-label="Imagem do time Studio Martins"><span>Nosso time</span></div><label for="p4" class="next">Próxima</label></article></section>
+<section class="spread s4"><article class="page left"><div class="photo full" role="img" aria-label="Imagem de serviços de beleza"><span>Serviços & resultados</span></div><label for="p3" class="prev">Anterior</label></article><article class="page right"><h2 class="title">Explore<br>os serviços</h2><p class="lead">Seu próximo momento de cuidado começa com a escolha certa.</p><ul class="menu" id="serviceHighlights"><li><strong>Catálogo de serviços</strong><span>Conheça os procedimentos disponíveis com cada profissional.</span></li></ul><label for="p5" class="next">Próxima</label></article></section>
+<section class="spread s5"><article class="page left"><p class="script big">Agende</p><h2 class="title">Seu horário<br>te espera</h2><label for="p4" class="prev">Anterior</label></article><article class="page right"><address><p><strong>Instagram</strong><span id="studioInstagramText">@studiomartinsudi</span></p><p><strong>Atendimento</strong>Escolha sua profissional e fale diretamente com ela para consultar horários.</p><p><strong>Localização</strong>Uberlândia • MG</p></address><a class="cta" id="instagramCta" href="https://www.instagram.com/studiomartinsudi/" target="_blank" rel="noreferrer">Conhecer o Studio</a><label for="p1" class="next">Voltar à capa</label></article></section>
+<nav class="dots" aria-label="Páginas"><label for="p1" title="Capa"></label><label for="p2" title="O espaço"></label><label for="p3" title="Profissionais"></label><label for="p4" title="Serviços"></label><label for="p5" title="Contato"></label></nav>
+</main><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="./magazine.js"></script></body></html>
