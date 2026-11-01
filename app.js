@@ -1,6 +1,6 @@
 // Somente a chave publishable deve ficar no navegador. Nunca use service_role aqui.
-const SUPABASE_URL = "https://svpkaxatonqqymphlchv.supabase.co";
-const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_vu49xyFqwXGZJ6VDhRo5_g_KWmFzrwu";
+const SUPABASE_URL = "https://ocjoeevywucetraqauzs.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_bP0gL8Nj3RkMdq19GmAC2w_TFvsVgou";
 
 const grid = document.querySelector("#professionalGrid");
 document.querySelector("#year").textContent = new Date().getFullYear();
