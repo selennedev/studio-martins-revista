@@ -79,3 +79,6 @@ input:focus-visible~.book .dots label,.next:focus-visible,.cta:focus-visible{out
 .professional-thumb{width:68px;height:82px;object-fit:cover;float:right;margin:0 0 8px 12px;filter:grayscale(12%)}
 .professional-entry a{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--lip);text-decoration:none}
 @media(max-width:760px){.institutional-cover{padding-bottom:34%}.brand-mark{max-height:65%}.professional-thumb{width:58px;height:70px}}
+
+.service-entry{grid-template-columns:1fr auto;align-items:start}
+.service-result-photo{grid-column:1/-1;width:100%;max-height:230px;object-fit:cover;object-position:center 38%;margin:0 0 8px}
