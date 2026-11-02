@@ -18,8 +18,8 @@ async function loadAll(){
  $("#professionalSelect").innerHTML=options(professionals);
  $("#categoryProfessional").innerHTML=options(professionals);
  $("#serviceProfessional").innerHTML=options(professionals);
- $("#professionalSelect").addEventListener("change", fillProfessional);
- $("#serviceProfessional").addEventListener("change", fillCategories);
+ $("#professionalSelect").onchange = fillProfessional;
+ $("#serviceProfessional").onchange = fillCategories;
  fillProfessional();fillCategories();
  $("#professionalsList").innerHTML=professionals.map(x=>'<div class="admin-item"><span>'+esc(x.name)+' · '+(x.is_active?'Ativa':'Inativa')+'</span><button data-prof="'+esc(x.id)+'">Editar</button></div>').join("");
  $("#categoriesList").innerHTML=categories.map(x=>'<div class="admin-item"><span>'+esc(x.name)+' · '+esc(professionals.find(p=>p.id===x.professional_id)?.name||'')+'</span><button data-cat="'+esc(x.id)+'">Desativar</button></div>').join("");
